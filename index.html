@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones de Incendios en Bolivia</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Notificaciones de Incendios en Bolivia</h1>
+        <p>Mantente informado sobre los incendios activos en el país y reporta si ves uno en tu área.</p>
+    </header>
+
+    <section id="notificaciones">
+        <h2>Últimos Incendios Reportados</h2>
+        <div id="contenedor-notificaciones">
+            <!-- Aquí se mostrarán las notificaciones de incendios -->
+        </div>
+    </section>
+
+    <!-- Sección de Chatbot -->
+    <section id="chatbot">
+        <h2>Ayudanos a mejorar</h2>
+        <div id="contenedor-chat">
+            <!-- Aquí se mostrará el chatbot -->
+        </div>
+        <input type="text" id="input-chat" placeholder="Habla con nosotros...">
+        <button onclick="enviarMensaje()">Enviar</button>
+    </section>
+
+    <section id="reporte-incendio">
+        <h2>Ayuda a los bomberos voluntarios</h2>
+        <form id="form-reporte">
+            <label for="descripcion">Puedes donar</label>
+            <input type="text" id="descripcion" required placeholder="Describe tu donativo">
+
+            <label for="region-reporte">Región:</label>
+            <select id="region-reporte" required>
+                <option value="">Selecciona una región</option>
+                <option value="occidente">Occidente</option>
+                <option value="oriente">Oriente</option>
+                <option value="sur">Sur</option>
+                <option value="norte">Norte</option>
+            </select>
+
+            <button type="submit">Gracias por su donativo</button>
+        </form>
+    </section>
+
+    <section id="conciencia-incendios">
+        <h2>Conciencia sobre los Incendios</h2>
+        <div class="contenedor-imagenes">
+            <div class="tarjeta-imagen">
+                <img src="imagenes proyecto/f3d163e9-d6ef-4593-b80b-190c834a739b.jfif" alt="Incendio en bosque" class="imagen-conciencia">
+                <p>Los incendios forestales son devastadores para la vida silvestre y el medio ambiente. ¡Protejamos nuestros bosques!</p>
+            </div>
+            <div class="tarjeta-imagen">
+                <img src="imagenes proyecto/032ba1d5-6fde-4809-906a-278ff7ee964d.jfif" alt="Fuego cerca de comunidades" class="imagen-conciencia">
+                <p>El fuego puede alcanzar zonas habitadas rápidamente, poniendo en peligro a las personas y animales.</p>
+            </div>
+            <div class="tarjeta-imagen">
+                <img src="imagenes proyecto/98bd95ef-b0d4-4e67-b3bf-3d7e50807e6d.jfif" alt="Bomberos luchando contra el fuego" class="imagen-conciencia">
+                <p>Los bomberos arriesgan sus vidas para detener el avance de los incendios. ¡Cuidemos nuestro entorno para ayudarlos!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="quienes-somos">
+        <h2>¿Quiénes Somos?</h2>
+        <p>Somos una plataforma comprometida con la protección de nuestro medio ambiente, informando a las personas sobre los incendios activos y promoviendo la acción inmediata. Nuestro objetivo es mantener a las comunidades seguras y concientizar sobre los daños devastadores de los incendios forestales.</p>
+        <p>¡Conéctate con nosotros en nuestras redes sociales!</p>
+
+        <div class="redes-sociales">
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            <a href="https://www.twitter.com" target="_blank">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.youtube.com" target="_blank">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+        </div>
+    </section>
+
+    <!-- Script para mostrar los últimos incendios reportados -->
+    <script>
+        // URL para obtener datos de incendios en Bolivia usando la API de NASA FIRMS (Reemplaza con tu clave de API)
+        const urlIncendios = 'https://firms.modaps.eosdis.nasa.gov/api/country/csv/Bolivia/VIIRS_SNPP_NRT'; // Debes tener una clave de API válida para esto.
+
+        async function obtenerIncendios() {
+            try {
+                const respuesta = await fetch(urlIncendios);
+                if (!respuesta.ok) {
+                    throw new Error('Error al obtener los datos');
+                }
+
+                // Asumiendo que la respuesta es JSON con los datos de incendios
+                const data = await respuesta.json();
+                mostrarIncendios(data);
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+                document.getElementById('contenedor-notificaciones').innerHTML = '<p>No se pudieron cargar los datos de incendios.</p>';
+            }
+        }
+
+        function mostrarIncendios(incendios) {
+            const contenedor = document.getElementById('contenedor-notificaciones');
+            contenedor.innerHTML = ''; // Limpiar el contenido previo
+
+            if (incendios.length === 0) {
+                contenedor.innerHTML = '<p>No se han reportado incendios recientemente en Bolivia.</p>';
+                return;
+            }
+
+            incendios.forEach(incendio => {
+                const incendioElement = document.createElement('div');
+                incendioElement.className = 'incendio';
+                
+                const fecha = new Date(incendio.acq_date);
+                incendioElement.innerHTML = `
+                    <h3>Incendio detectado el ${fecha.toLocaleDateString()}</h3>
+                    <p><strong>Región:</strong> ${incendio.latitude}, ${incendio.longitude}</p>
+                    <p><strong>Intensidad del fuego:</strong> ${incendio.brightness} Kelvin</p>
+                `;
+                
+                contenedor.appendChild(incendioElement);
+            });
+        }
+
+        // Llamar a la función para obtener y mostrar los incendios al cargar la página
+        document.addEventListener('DOMContentLoaded', obtenerIncendios);
+    </script>
+
+    <!-- Script de Tidio (fuera de secciones visuales) -->
+    <script src="//code.tidio.co/y7zwg0grgciw5mrw7lf2szvluclbtghv.js" async></script>
+
+    <!-- Botón flotante para abrir el chatbot -->
+    <div id="boton-chat" onclick="abrirChat()">
+        <i class="fas fa-comment"></i> Chat
+    </div>
+
+    <script>
+        function abrirChat() {
+            // Simula un clic en el widget de Tidio cuando el usuario hace clic en el botón flotante
+            document.querySelector('.tidio-chat-widget').click();
+        }
+    </script>
+</body>
+</html>

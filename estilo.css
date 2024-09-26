@@ -1,0 +1,243 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #ff6347;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+}
+
+/* Sección de notificaciones de incendios */
+#notificaciones {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#contenedor-notificaciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.incendio {
+    background-color: #ffe5e5;
+    border: 1px solid #ff4c4c;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.incendio h3 {
+    margin-top: 0;
+    color: #d9534f;
+}
+
+.incendio p {
+    margin: 5px 0;
+}
+
+/* Estilos del chatbot */
+#chatbot {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#chatbot input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#chatbot button {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#chatbot button:hover {
+    background-color: #ff4500;
+}
+
+/* Sección de reporte de incendios */
+#reporte-incendio {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#form-reporte {
+    display: flex;
+    flex-direction: column;
+}
+
+#form-reporte label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#form-reporte input,
+#form-reporte select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#form-reporte button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#form-reporte button:hover {
+    background-color: #ff4500;
+}
+
+/* Sección de conciencia sobre incendios */
+#conciencia-incendios {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-imagenes {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.tarjeta-imagen {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-imagen img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.tarjeta-imagen p {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #333;
+}
+
+/* Sección de quiénes somos */
+#quienes-somos {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#quienes-somos p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.redes-sociales {
+    margin-top: 20px;
+}
+
+.redes-sociales a {
+    text-decoration: none;
+    color: #ff6347;
+    margin: 0 10px;
+    font-size: 1.5em;
+    transition: color 0.3s ease;
+}
+
+.redes-sociales a:hover {
+    color: #ff4500;
+}
+
+/* Botón flotante para abrir el chatbot */
+#boton-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #FF6347;
+    color: white;
+    padding: 15px;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+#boton-chat:hover {
+    background-color: #FF4500;
+}
+
+#boton-chat i {
+    margin-right: 10px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .contenedor-imagenes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tarjeta-imagen {
+        width: 80%;
+    }
+
+    #chatbot input[type="text"] {
+        width: 100%;
+    }
+
+    #boton-chat {
+        bottom: 10px;
+        right: 10px;
+    }
+}
