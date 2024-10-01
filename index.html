@@ -6,6 +6,47 @@
     <title>Notificaciones de Incendios en Bolivia</title>
     <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos adicionales sugeridos */
+        .tarjeta-imagen {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .tarjeta-imagen:hover {
+            transform: translateY(-5px);
+        }
+
+        .imagen-conciencia {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        #boton-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #boton-chat.chat-abierto {
+            background-color: #00c853; /* Cambia el color cuando el chat está abierto */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -35,6 +76,9 @@
         <form id="form-reporte">
             <label for="descripcion">Puedes donar</label>
             <input type="text" id="descripcion" required placeholder="Describe tu donativo">
+
+            <label for="monto-donativo">Monto (en USD o BS):</label>
+            <input type="number" id="monto-donativo" required placeholder="Ingresa el monto de tu donativo">
 
             <label for="region-reporte">Región:</label>
             <select id="region-reporte" required>
@@ -94,8 +138,12 @@
         const urlIncendios = 'https://firms.modaps.eosdis.nasa.gov/api/country/csv/Bolivia/VIIRS_SNPP_NRT'; // Debes tener una clave de API válida para esto.
 
         async function obtenerIncendios() {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos de timeout
+
             try {
-                const respuesta = await fetch(urlIncendios);
+                const respuesta = await fetch(urlIncendios, { signal: controller.signal });
+                clearTimeout(timeoutId);
                 if (!respuesta.ok) {
                     throw new Error('Error al obtener los datos');
                 }
@@ -142,13 +190,13 @@
 
     <!-- Botón flotante para abrir el chatbot -->
     <div id="boton-chat" onclick="abrirChat()">
-        <i class="fas fa-comment"></i> Chat
+        <i class="fas fa-comments"></i>
     </div>
 
     <script>
         function abrirChat() {
-            // Simula un clic en el widget de Tidio cuando el usuario hace clic en el botón flotante
             document.querySelector('.tidio-chat-widget').click();
+            document.getElementById('boton-chat').classList.add('chat-abierto');
         }
     </script>
 </body>
