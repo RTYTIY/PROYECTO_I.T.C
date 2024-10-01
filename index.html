@@ -6,6 +6,7 @@
     <title>Notificaciones de Incendios en Bolivia</title>
     <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         /* Estilos adicionales sugeridos */
         .tarjeta-imagen {
@@ -71,6 +72,14 @@
         <button onclick="enviarMensaje()">Enviar</button>
     </section>
 
+
+    <!-- Sección de Mapa de Incendios -->
+    <section id="mapa-incendios">
+        <h2>Mapa de Incendios Activos</h2>
+        <div id="mapa" style="height: 500px;"></div>
+    </section>
+
+
     <section id="reporte-incendio">
         <h2>Ayuda a los bomberos voluntarios</h2>
         <form id="form-reporte">
@@ -131,6 +140,50 @@
             </a>
         </div>
     </section>
+
+
+    <!-- Leaflet y Script para el mapa -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        var mapa = L.map('mapa').setView([-16.2902, -63.5887], 5); // Bolivia como centro
+
+        // Agregar el tile layer (mapa base)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mapa);
+
+        // Función para agregar marcadores de incendios
+        function agregarMarcadores(incendios) {
+            incendios.forEach(incendio => {
+                var marcador = L.marker([incendio.latitude, incendio.longitude]).addTo(mapa);
+                marcador.bindPopup(`
+                    <h3>Incendio detectado</h3>
+                    <p><strong>Fecha:</strong> ${new Date(incendio.acq_date).toLocaleDateString()}</p>
+                    <p><strong>Intensidad del fuego:</strong> ${incendio.brightness} Kelvin</p>
+                `);
+            });
+        }
+
+        // Obtener y mostrar datos de incendios
+        async function obtenerIncendiosMapa() {
+            try {
+                const respuesta = await fetch('https://firms.modaps.eosdis.nasa.gov/api/area/csv/d95fa1d85c321922ce83aae4309dae6c/VIIRS_SNPP_NRT/world/1/2024-09-30'); // Reemplaza con la URL correcta de la API
+                if (!respuesta.ok) throw new Error('Error al obtener los datos');
+                
+                const data = await respuesta.json();
+                agregarMarcadores(data);
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+
+        // Ejecutar la función cuando la página cargue
+        document.addEventListener('DOMContentLoaded', obtenerIncendiosMapa);
+    </script>
+
+
+
 
     <!-- Script para mostrar los últimos incendios reportados -->
     <script>
@@ -199,5 +252,11 @@
             document.getElementById('boton-chat').classList.add('chat-abierto');
         }
     </script>
+
+    
+
+
+
+
 </body>
 </html>
