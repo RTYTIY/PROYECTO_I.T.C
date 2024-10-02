@@ -3,14 +3,33 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    /*background-color: #f4f4f4;*/
+    background-color: #ffffff;
+}
+
+header img{
+    max-width: 100px;
+    border-radius: 50%;
+    padding: 5px;
+    border: 10px solid rgb(15, 0, 0);
+ 
 }
 
 header {
-    background-color: #ff6347;
+    /*background-color: #ff6347;*/
+    background-image: url("imagenes proyecto/Img Bomb.jfif");
     color: white;
-    padding: 20px;
+    padding: 10px;
+    /*padding: 20px;*/
+    /*text-align: center;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content{
     text-align: center;
+    flex-grow: 1;
 }
 
 header h1 {
@@ -26,7 +45,7 @@ header p {
 /* Sección de notificaciones de incendios */
 #notificaciones {
     padding: 20px;
-    background-color: #fff;
+    background-color: #ec1c1c;
     margin: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -240,4 +259,14 @@ header p {
         bottom: 10px;
         right: 10px;
     }
+}
+
+#showMapBtn{
+    
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#showMapBtn:hover{
+    border: 2px solid #f17808;
 }
