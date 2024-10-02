@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notificaciones de Incendios en Bolivia</title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
@@ -45,21 +45,43 @@
         }
 
         #boton-chat.chat-abierto {
-            background-color: #00c853; /* Cambia el color cuando el chat está abierto */
+            background-color: #ffffff; /* Cambia el color cuando el chat está abierto */
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>N.I.B</h1>
-        <h6>NOTIFICACION DE INCENDIOS DE BOLIVIA</h6>
-        <p>Mantente informado sobre los incendios activos en el país y reporta si ves uno en tu área.</p>
+        <img src="imagenes proyecto\pixelcut-export.jpeg" alt="">
+        <div class="header-content">
+            <h1>N.I.B</h1>
+            <h6>NOTIFICACIÓN DE INCENDIOS DE BOLIVIA</h6>
+            <p>Mantente informado sobre los incendios activos en el país y reporta si ves uno en tu área.</p>
+        </div>
+        <img src="imagenes proyecto/logo1.jpg">
     </header>
 
     <section id="notificaciones">
         <h2>Últimos Incendios Reportados</h2>
+       <h1>Control de Incendios</h1>
+<button id="showMapBtn">Ver Mapa de Incendios en Tiempo Real</button>
+
+<div id="map-container">
+    <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Evento del botón para redirigir
+    document.getElementById('showMapBtn').onclick = function() {
+        window.location.href = 'https://incendios.fan-bo.org/Satrifo/plataforma/reportes.html'; // Redirige al enlace
+    };
+</script>
+
         <div id="contenedor-notificaciones">
             <!-- Aquí se mostrarán las notificaciones de incendios -->
+
+
+
         </div>
     </section>
 
@@ -127,14 +149,18 @@
         <p>¡Conéctate con nosotros en nuestras redes sociales!</p>
 
         <div class="redes-sociales">
-            <a href="https://www.facebook.com/profile.php?id=61566874194951" target="_blank">
+            <a href="https://www.facebook.com" target="_blank">
                 <i class="fab fa-facebook-f"></i> Facebook
             </a>
-            <a href="https://x.com/NIB2024r" target="_blank">
+            <a href="https://www.twitter.com" target="_blank">
                 <i class="fab fa-twitter"></i> Twitter
             </a>
             <a href="https://www.instagram.com" target="_blank">
                 <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.youtube.com" target="_blank">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
         </div>
     </section>
 
@@ -185,7 +211,7 @@
     <!-- Script para mostrar los últimos incendios reportados -->
     <script>
         // URL para obtener datos de incendios en Bolivia usando la API de NASA FIRMS (Reemplaza con tu clave de API)
-        const urlIncendios = 'https://firms.modaps.eosdis.nasa.gov/api/country/csv/Bolivia/VIIRS_SNPP_NRT'; // Debes tener una clave de API válida para esto.
+        const urlIncendios = 'https://firms.modaps.eosdis.nasa.gov/api/area/csv/3077c55ac78a26cb03e7cf806e7fde3c/VIIRS_SNPP_NRT/world/1/2024-10-02'; // Debes tener una clave de API válida para esto.
 
         async function obtenerIncendios() {
             const controller = new AbortController();
